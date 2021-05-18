@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+nav {
+  text-align: center;
+  margin: 2rem;
+  padding: 1rem;
+  background-color: rgb(64,64,64);
+  border-radius: 2rem;
+}
+
+body {
+  background-color: rgb(18,18,18);
+  color: white;
+  font-family: 'Comfortaa';
+}
+
+#app {
+  height: 100vh;
+}
+
+main {
+  height: 65vh;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
+.model-selector,
+.man-selector {
+  min-width: 10rem;
+  background-color: rgb(64,64,64);
+  color: white;
+  font-family: 'Comfortaa';
+  border-radius: 5px;
+  padding: 2px;
+  margin: .5rem;
+}
+.model-selector ::selection,
+.man-selector ::selection {
+  background-color: rgb(179,179,179);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.flight-control {
+  margin-top: auto;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
