@@ -1,11 +1,17 @@
 import React from 'react';
 import SimilarDisc from './SimilarDisc.jsx';
 
-const SimilarList = (props) => {
 
+const SimilarList = ({discs, updateSpotlight}) => {
 
   return (
-    <h1>Hello from the similar list!</h1>
+    <div className="similar-container">
+    {discs.map((disc, i) => {
+      return (
+        <SimilarDisc key={i} disc={disc} updateSpotlight={updateSpotlight} />
+        )
+    })}
+    </div>
   )
 }
 

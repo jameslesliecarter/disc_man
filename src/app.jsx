@@ -6,6 +6,7 @@ import DiscSpotlight from './components/DiscSpotlight.jsx';
 import FlightControl from './components/FlightControl.jsx';
 import Bag from './components/Bag.jsx';
 import ax from 'axios';
+import _ from 'underscore';
 
 class App extends React.Component {
   constructor(props){
@@ -15,11 +16,17 @@ class App extends React.Component {
       modelOptions: [],
       selectedModel: {},
       selectedDisc: {},
-      similarDiscs: []
+      similarDiscs: [],
+      currentSpeed: '',
+      currentGlide: '',
+      currentTurn: '',
+      currentFade: ''
     }
     this.updateMan = this.updateMan.bind(this);
     this.updateModel = this.updateModel.bind(this);
+    this.updateSpotlight = this.updateSpotlight.bind(this);
     this.fetchModels = this.fetchModels.bind(this);
+    this.fetchSimilar = this.fetchSimilar.bind(this);
   }
 
   updateMan(man) {
@@ -30,8 +37,25 @@ class App extends React.Component {
 
   updateModel(selected) {
     this.setState({
-      selectedModel: selected
+      selectedModel: selected,
+      selectedDisc: selected,
+      currentSpeed: selected.SPEED,
+      currentGlide: selected.GLIDE,
+      currentTurn: selected.TURN,
+      currentFade: selected.FADE
     });
+  }
+
+  updateSpotlight(disc) {
+    ax.get(`/disc?model=${disc}`)
+      .then((data) => {
+        this.setState({
+          selectedDisc: data.data[0]
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   fetchModels(man) {
@@ -42,7 +66,7 @@ class App extends React.Component {
         });
       })
       .catch(error => {
-        console.error(error);
+        console.error('brand fetch error: ', error);
       });
   }
 
@@ -50,13 +74,28 @@ class App extends React.Component {
     ax.post(`/similar`, model)
       .then(data => {
         this.setState({
-          similarDiscs: data.data
+          similarDiscs: data.data,
+          currentSpeed: data.data[0].SPEED,
+          currentGlide: data.data[0].GLIDE,
+          currentTurn: data.data[0].TURN,
+          currentFade: data.data[0].FADE
         });
       })
       .catch(error => {
-        console.error(error);
+        this.setState({
+          similarDiscs: [{
+            brand: "No discs match these flight numbers :(",
+            model: "n/a",
+            SPEED: "n/a",
+            GLIDE: "n/a",
+            TURN: "n/a",
+            FADE: "n/a"
+          }]
+        })
       });
   }
+
+
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedManufacturer !== this.state.selectedManufacturer) {
@@ -75,11 +114,11 @@ class App extends React.Component {
         <div className="controls">
           <ManSelector updateMan={this.updateMan}/>
           <ModelSelector models={this.state.modelOptions} updateModel={this.updateModel} />
-          <FlightControl />
+          <FlightControl speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} fetchSimilar={this.fetchSimilar}/>
         </div>
         <div className="display">
-          <SimilarList />
-          <DiscSpotlight />
+          <SimilarList discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
+          <DiscSpotlight disc={this.state.selectedDisc} />
         </div>
       </main>
       <div className="bag-zone">

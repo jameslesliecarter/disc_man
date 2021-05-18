@@ -41,6 +41,7 @@ main {
 }
 
 .controls {
+  width: 28%;
   display: flex;
   flex-direction: column;
 }
@@ -50,7 +51,32 @@ main {
 }
 
 .display {
+  width: 68%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.similar-container {
+  height: 70%;
+  display: flex;
+  flex-flow: column wrap;
+  overflow: scroll;
+}
+
+.similar-disc {
+  margin: 1rem;
+}
+.spotlight-btn {
+  color: rgb(161, 154, 112);
+}
+
+.add-to-bag-btn {
+  color: rgb(128, 139, 168);
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
