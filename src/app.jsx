@@ -20,13 +20,15 @@ class App extends React.Component {
       currentSpeed: '',
       currentGlide: '',
       currentTurn: '',
-      currentFade: ''
+      currentFade: '',
+      golfers: []
     }
     this.updateMan = this.updateMan.bind(this);
     this.updateModel = this.updateModel.bind(this);
     this.updateSpotlight = this.updateSpotlight.bind(this);
     this.fetchModels = this.fetchModels.bind(this);
     this.fetchSimilar = this.fetchSimilar.bind(this);
+    this.fetchGolfers = this.fetchGolfers.bind(this);
   }
 
   updateMan(man) {
@@ -90,12 +92,30 @@ class App extends React.Component {
             GLIDE: "n/a",
             TURN: "n/a",
             FADE: "n/a"
-          }]
+          }],
+          currentSpeed: model.SPEED,
+          currentGlide: model.GLIDE,
+          currentTurn: model.TURN,
+          currentFade: model.FADE
         })
       });
   }
 
+  fetchGolfers() {
+    ax.get('/golfers')
+      .then(data => {
+        this.setState({
+          golfers: data.data
+        });
+      })
+      .catch(error => {
+        console.error('golfers fetch error: ', error);
+      });
+  }
 
+  componentDidMount() {
+    this.fetchGolfers();
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedManufacturer !== this.state.selectedManufacturer) {
@@ -117,12 +137,12 @@ class App extends React.Component {
           <FlightControl speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} fetchSimilar={this.fetchSimilar}/>
         </div>
         <div className="display">
-          <SimilarList discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
+          <SimilarList speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
           <DiscSpotlight disc={this.state.selectedDisc} />
         </div>
       </main>
       <div className="bag-zone">
-        <Bag />
+        <Bag golfers={this.state.golfers}/>
       </div>
       </>
     )

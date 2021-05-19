@@ -60,8 +60,14 @@ main {
 .similar-container {
   height: 70%;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   overflow: scroll;
+}
+
+.similar-discs-container {
+  display: flex;
+  overflow: scroll;
+  flex-direction: row;
 }
 
 .similar-disc {

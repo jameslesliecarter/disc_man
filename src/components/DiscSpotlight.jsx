@@ -2,18 +2,18 @@ import React from 'react';
 
 const DiscSpotlight = ({disc}) => {
   if (disc.brand) {
-    if (disc.FADE - disc.TURN > 2) {
+    if (Number(disc.FADE) + Number(disc.TURN) > 2) {
       disc.stability = 'an overstable';
-    } else if (disc.FADE - disc.TURN <= -0.5) {
+    } else if (Number(disc.FADE) + Number(disc.TURN) <= -0.5) {
       disc.stability = 'an understable';
     } else {
       disc.stability = 'a stable';
     }
-    if (disc.SPEED <= 3) {
+    if (Number(disc.SPEED) <= 3) {
       disc.type = 'putter';
-    } else if (disc.SPEED <= 6) {
+    } else if (Number(disc.SPEED) <= 6) {
       disc.type = 'midrange driver';
-    } else if (disc.SPEED <= 9) {
+    } else if (Number(disc.SPEED) <= 9) {
       disc.type = 'fairway driver';
     } else {
       disc.type = 'distance driver';

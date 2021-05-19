@@ -22,10 +22,6 @@ const SimilarDisc = ({disc, updateSpotlight}) => {
     <div className="similar-disc">
       <h5>{capitalizeFirst(disc.brand)}</h5>
       <h3>{capitalizeFirst(disc.model)}</h3>
-      <div>Speed: {disc.SPEED}</div>
-      <div>Glide: {disc.GLIDE}</div>
-      <div>Turn: {disc.TURN}</div>
-      <div>Fade: {disc.FADE}</div>
       <div className="spotlight-btn" title={disc.model} onClick={update}>Spotlight Disc</div>
       <div className="add-to-bag-btn" title={disc.model} onClick={addToBag}>Add To Bag</div>
     </div>

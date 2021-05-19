@@ -51,20 +51,20 @@ const FlightControl = ({speed, glide, turn, fade, fetchSimilar}) => {
   return (
     <div className="flight-control">
       <div className="control-panel">
-        <div onClick={updateSpeed} title={1} className="more-speed">More Speed</div>
         <div onClick={updateSpeed} title={-1} className="less-speed">Less Speed</div>
+        <div onClick={updateSpeed} title={1} className="more-speed">More Speed</div>
       </div>
       <div className="control-panel">
-        <div onClick={updateGlide} title={1} className="more-glide">More Glide</div>
-        <div onClick={updateGlide} title={-1} className="less-glide">Less Glide</div>
+        <div onClick={updateGlide} title={-.5} className="less-glide">Less Glide</div>
+        <div onClick={updateGlide} title={.5} className="more-glide">More Glide</div>
       </div>
       <div className="control-panel">
-        <div onClick={updateTurn} title={1} className="more-turn">More Turn</div>
-        <div onClick={updateTurn} title={-1} className="less-turn">Less Turn</div>
+        <div onClick={updateTurn} title={.5} className="less-turn">Less Turn</div>
+        <div onClick={updateTurn} title={-.5} className="more-turn">More Turn</div>
       </div>
       <div className="control-panel">
-        <div onClick={updateFade} title={1} className="more-fade">More Fade</div>
-        <div onClick={updateFade} title={-1} className="less-fade">Less Fade</div>
+        <div onClick={updateFade} title={-.5} className="less-fade">Less Fade</div>
+        <div onClick={updateFade} title={.5} className="more-fade">More Fade</div>
       </div>
     </div>
   )

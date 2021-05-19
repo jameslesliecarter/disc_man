@@ -52,6 +52,37 @@ app.post('/similar', (req, res) => {
   });
 });
 
+app.get('/golfers', (req, res) => {
+  db.query('SELECT * FROM golfers',
+  (error, results, fields) => {
+    if (error) {
+      res.send(error);
+      res.status(500);
+      res.end();
+    } else {
+      res.json(results);
+      res.status(200);
+      res.end();
+    }
+  });
+});
+
+app.get('/bag', (req, res) => {
+  console.log(req.query.golfer);
+  db.query(`SELECT d.* FROM discs d,  golfers g,  bags b  WHERE d.id = b.id_disc AND b.id_golfer = g.id AND g.name = '${req.query.golfer}'`,
+  (error, results, fields) => {
+    if (error) {
+      res.send(error);
+      res.status(500);
+      res.end();
+    } else {
+      res.json(results);
+      res.status(200);
+      res.end();
+    }
+  });
+});
+
 app.get('/test', (req, res) => {
   res.send(req.body);
   res.status(200);
