@@ -1,53 +1,35 @@
 import React from 'react';
+import _ from 'underscore';
 import ax from 'axios';
 
-class InTheBag extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bag: []
-    };
+const InTheBag = ({bag, golfer}) => {
 
-    this.fetchBag = this.fetchBag.bind(this);
-  }
-
-  fetchBag(golfer) {
-    ax.get(`/bag?golfer=${golfer}`)
-      .then(data => {
-        this.setState({
-          bag: data.data
-        });
-      });
-  }
-
-  componentDidMount() {
-    this.fetchBag(this.props.golfer[0]);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.golfer[0] !== this.props.golfer[0]) {
-      this.fetchBag(this.props.golfer[0]);
+  const capitalizeFirst = (str) => {
+    let strArr = str.split(' ');
+    for (let i = 0; i < strArr.length; i ++) {
+      strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
     }
+    return strArr.join(' ');
   }
 
-  render() {
-    if (this.state.bag.length === 0) {
-      return (
-        <>
-        </>
-      )
-    } else {
-      return (
-        <div className="disc-bag">
-          <h3>{this.props.golfer[0]}'s Bag:</h3>
-          {this.state.bag.map((disc, i) => {
-            return (
-              <div className="disc" key={i}>{disc.model}</div>
-              );
-          })}
-        </div>
-      )
-    }
+  if (bag.length === 0) {
+    return (
+      <>
+      </>
+    )
+  } else {
+    return (
+      <div className="disc-bag">
+        <h3>{golfer[0]}'s Bag:</h3>
+        {_.sortBy(bag, (disc) => {
+          return disc.SPEED;
+        }).map((disc, i) => {
+          return (
+            <div className="disc" key={i}>{capitalizeFirst(disc.model)}</div>
+            );
+        })}
+      </div>
+    )
   }
 }
 

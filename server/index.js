@@ -111,5 +111,19 @@ app.get('/bag', (req, res) => {
   });
 });
 
+app.post('/bag', (req, res) => {
+  db.query(`INSERT INTO bags (id_golfer, id_disc) SELECT g.id, d.id FROM golfers g, discs d WHERE g.name = '${req.query.name}' AND d.model = '${req.query.model}'`,
+  (error, results, fields) => {
+    if (error) {
+      res.send(error);
+      res.status(500);
+      res.end();
+    } else {
+      res.status(204);
+      res.end();
+    }
+  });
+});
+
 
 module.exports = app;

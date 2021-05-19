@@ -23,7 +23,8 @@ class App extends React.Component {
       currentFade: '',
       golfers: [],
       showGolfers: false,
-      currentGolfer: []
+      currentGolfer: [],
+      currentBag: []
     }
     this.updateMan = this.updateMan.bind(this);
     this.updateModel = this.updateModel.bind(this);
@@ -31,9 +32,11 @@ class App extends React.Component {
     this.fetchModels = this.fetchModels.bind(this);
     this.fetchSimilar = this.fetchSimilar.bind(this);
     this.fetchGolfers = this.fetchGolfers.bind(this);
+    this.fetchBag = this.fetchBag.bind(this);
     this.renderGolfers = this.renderGolfers.bind(this);
     this.toggleGolfers = this.toggleGolfers.bind(this);
     this.updateGolfer = this.updateGolfer.bind(this);
+    this.addToBag = this.addToBag.bind(this);
   }
 
   updateMan(man) {
@@ -67,10 +70,19 @@ class App extends React.Component {
 
   updateGolfer(e) {
     e.preventDefault();
-    console.log(e.target.innerText);
     this.setState({
       currentGolfer: [e.target.innerText]
     })
+  }
+
+  addToBag(model) {
+    ax.post(`/bag?name=${this.state.currentGolfer[0]}&model=${model}`)
+      .then(data => {
+        this.fetchBag(this.state.currentGolfer[0]);
+      })
+      .catch(error => {
+        console.error('bag add error: ', error);
+      });
   }
 
   fetchModels(man) {
@@ -126,13 +138,22 @@ class App extends React.Component {
       });
   }
 
+  fetchBag(golfer) {
+    ax.get(`/bag?golfer=${golfer}`)
+      .then(data => {
+        this.setState({
+          currentBag: data.data
+        });
+      });
+  }
+
   renderGolfers() {
     if (this.state.showGolfers) {
       return (
         <ul className="golfers-list">
           {this.state.golfers.map((golfer, i) => {
             return (
-              <li key={i} onClick={this.updateGolfer}>{golfer.name}</li>
+              <li className="list-golfer" key={i} onClick={this.updateGolfer}>{golfer.name}</li>
             )
           })}
         </ul>
@@ -162,6 +183,9 @@ class App extends React.Component {
     if (prevState.selectedModel !== this.state.selectedModel) {
       this.fetchSimilar(this.state.selectedModel);
     }
+    if (prevState.currentGolfer !== this.state.currentGolfer) {
+      this.fetchBag(this.state.currentGolfer[0]);
+    }
   }
 
   render() {
@@ -181,12 +205,12 @@ class App extends React.Component {
         <FlightControl speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} fetchSimilar={this.fetchSimilar}/>
       </div>
       <div className="display">
-        <SimilarList speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
+        <SimilarList addToBag={this.addToBag} golfer={this.state.currentGolfer} speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
         <DiscSpotlight disc={this.state.selectedDisc} />
       </div>
       </main>
       <div className="bag-zone">
-        <InTheBag golfer={this.state.currentGolfer}/>
+        <InTheBag golfer={this.state.currentGolfer} bag={this.state.currentBag}/>
       </div>
       </>
     )

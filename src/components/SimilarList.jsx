@@ -1,8 +1,9 @@
 import React from 'react';
+import ax from 'axios';
 import SimilarDisc from './SimilarDisc.jsx';
 
 
-const SimilarList = ({speed, glide, turn, fade, discs, updateSpotlight}) => {
+const SimilarList = ({addToBag, golfer, speed, glide, turn, fade, discs, updateSpotlight}) => {
 
 
   if (discs.length) {
@@ -12,7 +13,7 @@ const SimilarList = ({speed, glide, turn, fade, discs, updateSpotlight}) => {
         <div className="similar-discs-container">
           {discs.map((disc, i) => {
             return (
-              <SimilarDisc key={i} disc={disc} updateSpotlight={updateSpotlight} />
+              <SimilarDisc addToBag={addToBag} key={i} disc={disc} updateSpotlight={updateSpotlight} />
             )
           })}
         </div>

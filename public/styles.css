@@ -117,3 +117,8 @@ main {
 ul {
   background-color: rgb(64,64,64);
 }
+
+li {
+  margin: .25rem;
+  border-radius: 1rem;
+}

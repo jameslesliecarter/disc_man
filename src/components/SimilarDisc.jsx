@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SimilarDisc = ({disc, updateSpotlight}) => {
+const SimilarDisc = ({addToBag, disc, updateSpotlight}) => {
 
   const capitalizeFirst = (str) => {
     let strArr = str.split(' ');
@@ -14,8 +14,9 @@ const SimilarDisc = ({disc, updateSpotlight}) => {
     updateSpotlight(e.target.title);
   }
 
-  const addToBag = (e) => {
+  const add = (e) => {
     e.preventDefault();
+    addToBag(disc.model);
   }
 
   return (
@@ -23,7 +24,7 @@ const SimilarDisc = ({disc, updateSpotlight}) => {
       <h5>{capitalizeFirst(disc.brand)}</h5>
       <h3>{capitalizeFirst(disc.model)}</h3>
       <div className="spotlight-btn" title={disc.model} onClick={update}>Spotlight Disc</div>
-      <div className="add-to-bag-btn" title={disc.model} onClick={addToBag}>Add To Bag</div>
+      <div className="add-to-bag-btn" title={disc.model} onClick={add}>Add To Bag</div>
     </div>
   )
 }
