@@ -22,7 +22,7 @@ const InTheBag = ({bag, golfer}) => {
       <div className="disc-bag">
         <h3>{golfer[0]}'s Bag:</h3>
         {_.sortBy(bag, (disc) => {
-          return disc.SPEED;
+          return Number(disc.SPEED);
         }).map((disc, i) => {
           return (
             <div className="disc" key={i}>{capitalizeFirst(disc.model)}</div>

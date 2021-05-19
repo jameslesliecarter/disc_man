@@ -125,5 +125,9 @@ app.post('/bag', (req, res) => {
   });
 });
 
+app.put('/bag', (req, res) => {
+
+});
+
 
 module.exports = app;

@@ -5,6 +5,7 @@ import SimilarList from './components/SimilarList.jsx';
 import DiscSpotlight from './components/DiscSpotlight.jsx';
 import FlightControl from './components/FlightControl.jsx';
 import InTheBag from './components/InTheBag.jsx';
+import AddGolfer from './components/AddGolfer.jsx';
 import ax from 'axios';
 import _ from 'underscore';
 
@@ -197,6 +198,7 @@ class App extends React.Component {
         {this.renderGolfers()}
         </div>
         <div className="title">Let's Get Discy With It</div>
+        <AddGolfer />
       </nav>
       <main>
       <div className="controls">

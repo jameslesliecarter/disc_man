@@ -122,3 +122,8 @@ li {
   margin: .25rem;
   border-radius: 1rem;
 }
+
+.add-golfer-input {
+  border-radius: 2rem;
+
+}
