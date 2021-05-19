@@ -4,7 +4,7 @@ import ModelSelector from './components/ModelSelector.jsx';
 import SimilarList from './components/SimilarList.jsx';
 import DiscSpotlight from './components/DiscSpotlight.jsx';
 import FlightControl from './components/FlightControl.jsx';
-import Bag from './components/Bag.jsx';
+import InTheBag from './components/InTheBag.jsx';
 import ax from 'axios';
 import _ from 'underscore';
 
@@ -21,7 +21,9 @@ class App extends React.Component {
       currentGlide: '',
       currentTurn: '',
       currentFade: '',
-      golfers: []
+      golfers: [],
+      showGolfers: false,
+      currentGolfer: []
     }
     this.updateMan = this.updateMan.bind(this);
     this.updateModel = this.updateModel.bind(this);
@@ -29,6 +31,9 @@ class App extends React.Component {
     this.fetchModels = this.fetchModels.bind(this);
     this.fetchSimilar = this.fetchSimilar.bind(this);
     this.fetchGolfers = this.fetchGolfers.bind(this);
+    this.renderGolfers = this.renderGolfers.bind(this);
+    this.toggleGolfers = this.toggleGolfers.bind(this);
+    this.updateGolfer = this.updateGolfer.bind(this);
   }
 
   updateMan(man) {
@@ -58,6 +63,14 @@ class App extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  updateGolfer(e) {
+    e.preventDefault();
+    console.log(e.target.innerText);
+    this.setState({
+      currentGolfer: [e.target.innerText]
+    })
   }
 
   fetchModels(man) {
@@ -113,6 +126,31 @@ class App extends React.Component {
       });
   }
 
+  renderGolfers() {
+    if (this.state.showGolfers) {
+      return (
+        <ul className="golfers-list">
+          {this.state.golfers.map((golfer, i) => {
+            return (
+              <li key={i} onClick={this.updateGolfer}>{golfer.name}</li>
+            )
+          })}
+        </ul>
+      )
+    } else {
+      return (
+        <>
+        </>
+      )
+    }
+  }
+
+  toggleGolfers() {
+    this.setState({
+      showGolfers: !this.state.showGolfers
+    })
+  }
+
   componentDidMount() {
     this.fetchGolfers();
   }
@@ -129,20 +167,26 @@ class App extends React.Component {
   render() {
     return (
       <>
-      <nav className="nav-bar" >Let's Get Discy With It</nav>
-        <main>
-        <div className="controls">
-          <ManSelector updateMan={this.updateMan}/>
-          <ModelSelector models={this.state.modelOptions} updateModel={this.updateModel} />
-          <FlightControl speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} fetchSimilar={this.fetchSimilar}/>
+      <nav className="nav-bar" >
+        <div className='golf-list-container'>
+        <div onClick={this.toggleGolfers} className="golfer-select">Golfers</div>
+        {this.renderGolfers()}
         </div>
-        <div className="display">
-          <SimilarList speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
-          <DiscSpotlight disc={this.state.selectedDisc} />
-        </div>
+        <div className="title">Let's Get Discy With It</div>
+      </nav>
+      <main>
+      <div className="controls">
+        <ManSelector updateMan={this.updateMan}/>
+        <ModelSelector models={this.state.modelOptions} updateModel={this.updateModel} />
+        <FlightControl speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} fetchSimilar={this.fetchSimilar}/>
+      </div>
+      <div className="display">
+        <SimilarList speed={this.state.currentSpeed} glide={this.state.currentGlide} turn={this.state.currentTurn} fade={this.state.currentFade} discs={this.state.similarDiscs} updateSpotlight={this.updateSpotlight}/>
+        <DiscSpotlight disc={this.state.selectedDisc} />
+      </div>
       </main>
       <div className="bag-zone">
-        <Bag golfers={this.state.golfers}/>
+        <InTheBag golfer={this.state.currentGolfer}/>
       </div>
       </>
     )

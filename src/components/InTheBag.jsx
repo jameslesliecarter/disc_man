@@ -21,20 +21,33 @@ class InTheBag extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchBag(this.props.golfer.name);
+    this.fetchBag(this.props.golfer[0]);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.golfer[0] !== this.props.golfer[0]) {
+      this.fetchBag(this.props.golfer[0]);
+    }
   }
 
   render() {
-    return (
-      <div className="disc-bag">
-        <h3>{this.props.golfer.name}'s Bag:</h3>
-        {this.state.bag.map((disc, i) => {
-          return (
-            <div className="disc" key={i}>{disc.model}</div>
-            );
-        })}
-      </div>
-    );
+    if (this.state.bag.length === 0) {
+      return (
+        <>
+        </>
+      )
+    } else {
+      return (
+        <div className="disc-bag">
+          <h3>{this.props.golfer[0]}'s Bag:</h3>
+          {this.state.bag.map((disc, i) => {
+            return (
+              <div className="disc" key={i}>{disc.model}</div>
+              );
+          })}
+        </div>
+      )
+    }
   }
 }
 

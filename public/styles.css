@@ -6,7 +6,12 @@ nav {
   padding: 1rem;
   background-color: rgb(64,64,64);
   border-radius: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-height: 23px;
 }
+
 
 body {
   background-color: rgb(18,18,18);
@@ -85,4 +90,30 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.golfer-select {
+  margin-left: 3rem;
+  margin-top: auto;
+  border-radius: 2rem;
+}
+
+.title {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.golf-list-container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.golfers-list {
+  overflow: visible;
+  background-color: rgb(64,64,64);
+  margin-right: 2rem;
+}
+
+ul {
+  background-color: rgb(64,64,64);
 }
