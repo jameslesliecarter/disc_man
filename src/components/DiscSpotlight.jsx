@@ -2,7 +2,7 @@ import React from 'react';
 
 const DiscSpotlight = ({disc}) => {
   if (disc.brand) {
-    if (Number(disc.FADE) + Number(disc.TURN) > 2) {
+    if (Number(disc.FADE) + Number(disc.TURN) > 2 || Number(disc.FADE) >= 3) {
       disc.stability = 'an overstable';
     } else if (Number(disc.FADE) + Number(disc.TURN) <= -0.5) {
       disc.stability = 'an understable';

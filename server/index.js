@@ -68,7 +68,6 @@ app.get('/golfers', (req, res) => {
 });
 
 app.get('/bag', (req, res) => {
-  console.log(req.query.golfer);
   db.query(`SELECT d.* FROM discs d,  golfers g,  bags b  WHERE d.id = b.id_disc AND b.id_golfer = g.id AND g.name = '${req.query.golfer}'`,
   (error, results, fields) => {
     if (error) {

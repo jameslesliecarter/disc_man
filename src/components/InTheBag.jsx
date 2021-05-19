@@ -26,10 +26,11 @@ class InTheBag extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="disc-bag">
+        <h3>{this.props.golfer.name}'s Bag:</h3>
         {this.state.bag.map((disc, i) => {
           return (
-            <div key={i}>{disc.model}</div>
+            <div className="disc" key={i}>{disc.model}</div>
             );
         })}
       </div>
