@@ -38,6 +38,7 @@ class App extends React.Component {
     this.toggleGolfers = this.toggleGolfers.bind(this);
     this.updateGolfer = this.updateGolfer.bind(this);
     this.addToBag = this.addToBag.bind(this);
+    this.removeFromBag = this.removeFromBag.bind(this);
   }
 
   updateMan(man) {
@@ -73,7 +74,8 @@ class App extends React.Component {
     e.preventDefault();
     this.setState({
       currentGolfer: [e.target.innerText]
-    })
+    });
+    this.toggleGolfers();
   }
 
   addToBag(model) {
@@ -83,6 +85,16 @@ class App extends React.Component {
       })
       .catch(error => {
         console.error('bag add error: ', error);
+      });
+  }
+
+  removeFromBag(model) {
+    ax.put(`/bag?model=${model}&name=${this.state.currentGolfer[0]}`)
+      .then(data => {
+        this.fetchBag(this.state.currentGolfer[0])
+      })
+      .catch(error => {
+        console.error('bag removal error: ', error);
       });
   }
 
@@ -198,7 +210,7 @@ class App extends React.Component {
         {this.renderGolfers()}
         </div>
         <div className="title">Let's Get Discy With It</div>
-        <AddGolfer />
+        <AddGolfer fetchGolfers={this.fetchGolfers}/>
       </nav>
       <main>
       <div className="controls">
@@ -212,7 +224,7 @@ class App extends React.Component {
       </div>
       </main>
       <div className="bag-zone">
-        <InTheBag golfer={this.state.currentGolfer} bag={this.state.currentBag}/>
+        <InTheBag removeFromBag={this.removeFromBag} spotlight={this.updateSpotlight} golfer={this.state.currentGolfer} bag={this.state.currentBag}/>
       </div>
       </>
     )

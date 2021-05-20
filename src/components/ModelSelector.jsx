@@ -30,6 +30,7 @@ const ModelSelector = ({models, updateModel}) => {
   } else {
   return (
     <>
+    <h4>Select Model:</h4>
     <select size="10" className={'model-selector'} onChange={update}>
       {_.sortBy(models, (model) => {
       return model.model.toLowerCase();

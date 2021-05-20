@@ -1,4 +1,5 @@
 import React from 'react';
+import ax from 'axios';
 
 class AddGolfer extends React.Component {
   constructor(props) {
@@ -17,7 +18,20 @@ class AddGolfer extends React.Component {
   }
 
   handleSubmit(e) {
-    //TODO submit golferName
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      console.log('entered');
+      ax.post(`/golfers?name=${this.state.golferName}`)
+        .then(data => {
+          this.props.fetchGolfers();
+          this.setState({
+            golferName: ''
+          });
+        })
+        .catch(error => {
+          console.error('Golfer POST error: ', error);
+        });
+    }
   }
 
   render() {

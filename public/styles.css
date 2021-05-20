@@ -91,6 +91,9 @@ main {
   flex-direction: row;
   justify-content: space-between;
 }
+.control-panel :hover {
+  cursor: pointer;
+}
 
 .golfer-select {
   margin-left: 3rem;
@@ -112,6 +115,8 @@ main {
   overflow: visible;
   background-color: rgb(64,64,64);
   margin-right: 2rem;
+  z-index: 999;
+  border: solid black 1px;
 }
 
 ul {
@@ -125,5 +130,14 @@ li {
 
 .add-golfer-input {
   border-radius: 2rem;
+}
 
+.disc-bag {
+  padding-bottom: 3rem;
+}
+.disc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 25vw;
 }

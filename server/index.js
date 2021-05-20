@@ -83,7 +83,7 @@ app.get('/golfers', (req, res) => {
 });
 
 app.post('/golfers', (req, res) => {
-  db.query(`INSERT INTO golfers (name) VALUES (${req.query.name})`,
+  db.query(`INSERT INTO golfers (name) VALUES ('${req.query.name}')`,
   (error, results, fields) => {
     if (error) {
       res.send(error);
@@ -126,7 +126,17 @@ app.post('/bag', (req, res) => {
 });
 
 app.put('/bag', (req, res) => {
-
+  db.query(`DELETE FROM bags b WHERE b.id_golfer IN (SELECT g.id FROM golfers g WHERE g.name = '${req.query.name}') AND b.id_disc IN (SELECT d.id FROM discs d WHERE d.model = '${req.query.model}')`,
+  (error, results, fields) => {
+    if (error) {
+      res.send(error);
+      res.status(500);
+      res.end();
+    } else {
+      res.status(203);
+      res.end();
+    }
+  })
 });
 
 

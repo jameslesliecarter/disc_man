@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 import ax from 'axios';
 
-const InTheBag = ({bag, golfer}) => {
+const InTheBag = ({bag, golfer, spotlight, removeFromBag}) => {
 
   const capitalizeFirst = (str) => {
     let strArr = str.split(' ');
@@ -10,6 +10,15 @@ const InTheBag = ({bag, golfer}) => {
       strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1);
     }
     return strArr.join(' ');
+  }
+
+  const updateSpotlight = (e) => {
+    spotlight(e.target.innerText.split('\n')[0].toLowerCase());
+  }
+
+  const removeDisc = (e) => {
+    console.log(e.target.parentElement.innerText.split('\n')[0].toLowerCase());
+    removeFromBag(e.target.parentElement.innerText.split('\n')[0].toLowerCase());
   }
 
   if (bag.length === 0) {
@@ -25,7 +34,11 @@ const InTheBag = ({bag, golfer}) => {
           return Number(disc.SPEED);
         }).map((disc, i) => {
           return (
-            <div className="disc" key={i}>{capitalizeFirst(disc.model)}</div>
+            <div className="disc" key={i}>
+              <div onClick={updateSpotlight} >{capitalizeFirst(disc.model)}
+              </div>
+              <span onClick={removeDisc}>Remove</span>
+            </div>
             );
         })}
       </div>

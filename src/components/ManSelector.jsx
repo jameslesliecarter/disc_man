@@ -28,7 +28,7 @@ const ManSelector = ({updateMan, man}) => {
     'obsidian discs',
     'ozone discs',
     'plastic addicts',
-    'prodicgy',
+    'prodigy',
     'prodiscus',
     'reptilian disc golf',
     'RPM',
@@ -80,6 +80,7 @@ const ManSelector = ({updateMan, man}) => {
   let options = makeOptions(discMans);
   return (
     <>
+      <h4>Select Manufacturer:</h4>
       <select size="10" className={'man-selector'} onChange={update}>
         {options.map((option, i) => {
           return(
