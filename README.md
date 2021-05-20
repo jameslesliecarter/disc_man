@@ -8,4 +8,7 @@ Clone down this repo, and change directories into the folder you've cloned down.
 ###But there is another way
 If you're fancy, and you have docker installed, and don't mind building and running it locally, you can run `docker build . -t ${your preferred image name}` and once your docker image has built, run `docker run -p 8080:8080 ${whatever you named the image}`, then head to localhost:8080 in your browser.
 
+###Of course both of these local run methods require a bit of tweaking.
+First check out the database/index.js file and input your local mysql db credentials, and if you're running it via docker, change `localhost` to `host.docker.internal`. You will also need to seed your local db with the discs themselves, but this csv is not currently available in the repo, so... sorry.
+
 Have fun finding some new discs, maybe even from manufacturers you haven't heard of!
